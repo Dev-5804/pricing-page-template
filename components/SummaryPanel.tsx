@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { BillingMode, plans, addons, calculateTotal } from '@/lib/pricing-data';
 import Button from './Button';
 
@@ -12,6 +15,7 @@ export default function SummaryPanel({
   billingMode,
   selectedAddonIds,
 }: SummaryPanelProps) {
+  const router = useRouter();
   const selectedPlan = plans.find((p) => p.id === selectedPlanId);
   const selectedAddons = addons.filter((a) => selectedAddonIds.includes(a.id));
   const total = calculateTotal(selectedPlanId, billingMode, selectedAddonIds);
@@ -19,6 +23,15 @@ export default function SummaryPanel({
   if (!selectedPlan) return null;
 
   const planPrice = billingMode === 'monthly' ? selectedPlan.monthlyPrice : selectedPlan.yearlyPrice;
+
+  const handleCheckout = () => {
+    const params = new URLSearchParams({
+      plan: selectedPlanId,
+      billing: billingMode,
+      addons: selectedAddonIds.join(','),
+    });
+    router.push(`/checkout?${params.toString()}`);
+  };
 
   return (
     <div className="sticky top-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg dark:bg-gray-900 dark:border-gray-700">
@@ -79,7 +92,7 @@ export default function SummaryPanel({
         </div>
       </div>
 
-      <Button variant="primary" size="lg" className="mt-6 w-full">
+      <Button variant="primary" size="lg" className="mt-6 w-full" onClick={handleCheckout}>
         Continue to Checkout
       </Button>
 

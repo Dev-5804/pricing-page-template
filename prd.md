@@ -24,14 +24,15 @@ Build a single-page “Pricing & Plan Selector” UI demonstrating:
   * Feature comparison table or list
 * Add-ons selection (checkboxes or toggles)
 * Price summary panel recalculating in real time
-* One “Continue” button (no actual checkout)
-* Small explanation text (“Demo component for portfolio”)
+* Continue button with navigation to checkout
+* Checkout page with form validation
+* Small explanation text ("Demo component for portfolio")
 
 **Out of scope:**
 
-* Real payments
+* Real payment processing (simulated only)
 * Auth
-* Multi-page flows
+* Backend integration
 
 ---
 
@@ -86,11 +87,14 @@ Build a single-page “Pricing & Plan Selector” UI demonstrating:
 
 ### Tech Stack
 
-* Next.js App Router
-* TypeScript
-* Tailwind CSS
+* Next.js App Router (v16.0.3)
+* React 19
+* TypeScript (strict mode)
+* Tailwind CSS v4
 
-Single page: `/pricing` (or `/`).
+Pages: 
+* `/` - Pricing & Plan Selector
+* `/checkout` - Checkout Form
 
 ---
 
@@ -98,33 +102,56 @@ Single page: `/pricing` (or `/`).
 
 ```txt
 /app
-  /pricing
+  page.tsx
+  /checkout
     page.tsx
+  layout.tsx
+  globals.css
 /components
   PlanToggle.tsx
   PlanCard.tsx
   AddonToggle.tsx
   SummaryPanel.tsx
+  CheckoutSummary.tsx
   Button.tsx
   Badge.tsx
-/styles
-  globals.css
+  Input.tsx
+  Label.tsx
+/lib
+  pricing-data.ts
 ```
 
-State can live in:
+State management:
 
-* `usePricingStore` (Zustand), or
-* Local component state (if small and clean)
+* Local component state with `useState` (simple and clean)
 
 ---
 
 ### Acceptance Criteria
 
-You should be able to check these as true:
+**Pricing Page:**
+* [x] Monthly/Yearly toggle correctly changes all plan and add-on prices
+* [x] Only one plan can be selected at a time
+* [x] Add-ons can be toggled independently
+* [x] Summary panel always shows correct total
+* [x] Smooth animations on toggle switch and card selection
+* [x] "Most Popular" badge displays on Pro plan
+* [x] Yearly billing shows savings calculation
+* [x] Continue button navigates to checkout with selected data
 
-* [ ] Monthly/Yearly toggle correctly changes all plan and add-on prices
-* [ ] Only one plan can be selected at a time
-* [ ] Add-ons can be toggled independently
-* [ ] Summary panel always shows correct total
-* [ ] UI is responsive on mobile and desktop
-* [ ] No console errors
+**Checkout Page:**
+* [x] Order summary displays selected plan, billing mode, and add-ons
+* [x] Form validation for all required fields (email, name, card, address)
+* [x] Card number auto-formats with spaces every 4 digits
+* [x] Expiry date auto-formats as MM/YY
+* [x] Real-time error messages clear when user starts typing
+* [x] Processing state with loading spinner
+* [x] Success screen displays after form submission
+* [x] Back to pricing navigation works correctly
+
+**General:**
+* [x] UI is fully responsive on mobile and desktop
+* [x] Dark mode support throughout
+* [x] No console errors or TypeScript errors
+* [x] Sticky summary panels on desktop view
+* [x] Clean component structure with reusable components
