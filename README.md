@@ -2,6 +2,10 @@
 
 A modern, interactive pricing page with a complete checkout flow built with Next.js 16, React 19, TypeScript, and Tailwind CSS v4. This project demonstrates complex UI state management, conditional rendering, animations, and clean component architecture.
 
+## Live Demo
+
+Check out the live demo of the project: [Pricing Page Template](https://pricing-page-template.vercel.app/)
+
 ## ✨ Features
 
 ### Pricing Page
